@@ -11,6 +11,7 @@ terraform.tfstate.backup
 # Variables (sensíveis)
 *.tfvars
 *.tfvars.json
+terraform.api
 
 # Overrides
 override.tf
