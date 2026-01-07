@@ -3,17 +3,27 @@ resource "proxmox_virtual_environment_vm" "debian" {
   node_name = var.virtual_environment_node_name
 
   clone {
-    vm_id = 9000
+    vm_id = 9001
+  }
+
+  agent {
+	enabled = true
+  }
+
+  serial_device {
+	device = "socket"
   }
 
   disk {
     datastore_id = var.datastore_id
     size         = 32
-    interface    = "scsi0"
+    interface    = "virtio0"
   }
+
   memory{
 	dedicated = 768
   }
+  
 
   initialization {
 	user_account {
@@ -22,7 +32,8 @@ resource "proxmox_virtual_environment_vm" "debian" {
 	}
     ip_config {
       ipv4 {
-        address = "dhcp"
+        address = "192.168.1.248/24"
+	gateway = "192.168.1.1"
       }
     }
 	datastore_id = var.datastore_id

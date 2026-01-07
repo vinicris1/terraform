@@ -3,6 +3,13 @@ qm create 9000 --name debian-12-template --memory 1024 --net0 virtio,bridge=vmbr
 #Config file to find the path /etc/pve/storage.cfg#
 qm importdisk 9000 debian-12-genericcloud-amd64.img local-zfs
 qm set 9000 --scsihw virtio-scsi-pci --scsi0 local-zfs:vm-9000-disk-0
+qm set 9000 --efidisk0 local-zfs:0,format=raw
 qm set 9000 --ide2 local-zfs:cloudinit
 qm set 9000 --boot c --bootdisk scsi0
+qm set 9000 --serial0 socket
+qm set 9000 --vga serial0
+qm set 9000 --agent enabled=1
+
+
+#Não transformar em template antes de instalar o qemu-guest-agent e garantir que o serviço está up#
 qm template 9000
